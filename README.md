@@ -46,5 +46,8 @@ Using `RectProvider`
 ```
 
 
+![](https://github.com/jzoom/images/raw/master/get_rect.gif)
+
+
 ### More easy way to use `WidgetsBinding` is coming soon.
 
