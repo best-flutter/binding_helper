@@ -36,26 +36,28 @@ abstract class AfterRenderingMixin<T extends StatefulWidget> extends State<T> {
 ///
 /// }
 ///
-abstract class GetRectMinxin<T extends StatefulWidget> extends State<T> {
-  @override
+mixin GetRectMinxin<T extends StatefulWidget> on State<T> {
   void didChangeDependencies() {
-    super.didChangeDependencies();
     WidgetsBinding.instance.addPostFrameCallback(onAfterRendering);
   }
 
-  @override
-  void didUpdateWidget(T oldWidget) {
-    super.didUpdateWidget(oldWidget);
+  BuildContext get context;
 
+  void didUpdateWidget(T oldWidget) {
     WidgetsBinding.instance.addPostFrameCallback(onAfterRendering);
   }
 
   void onAfterRendering(Duration timeStamp) {
-    RenderObject renderObject = context.findRenderObject();
-    Size size = renderObject.paintBounds.size;
-    Vector3 vector3 = renderObject.getTransformTo(null)?.getTranslation();
-    onGetRect(
-        new Rect.fromLTWH(vector3?.x, vector3?.y, size?.width, size?.height));
+    RenderObject renderObject = context?.findRenderObject();
+    if (renderObject != null) {
+      Size size = renderObject.paintBounds.size;
+      Vector3 vector3 = renderObject.getTransformTo(null)?.getTranslation();
+      onGetRect(
+          new Rect.fromLTWH(vector3?.x, vector3?.y, size?.width, size?.height));
+    }else{
+     // onGetRect(new Rect.fromLTWH(0.0, 0.0, 0.0, 0.0));
+    }
+
   }
 
   void onGetRect(Rect rect);
